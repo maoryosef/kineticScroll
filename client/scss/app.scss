@@ -1,0 +1,26 @@
+.viewport {
+	border: 1px solid black;
+	width: 640px;
+	height: 480px;
+	overflow: hidden;
+	padding: 10px;
+	.innerDiv {
+		margin-top: 50%;
+		height: 10px;
+		width: 3000px;
+		border: 1px solid purple;
+		cursor: -webkit-grab;
+		&:active {
+			cursor: -webkit-grabbing;
+		}
+		.item {
+			width: 50px;
+			height: 100%;
+			border-right: 1px solid blue;
+			display: inline-block;
+			text-align: center;
+			font-size: 11px;
+			line-height: 10px;
+		}
+	}
+}
