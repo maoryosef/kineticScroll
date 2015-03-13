@@ -12,6 +12,7 @@
 
 	window.onload = function(e) {
 		var draggable = document.getElementById("dragged");
+		var stats = document.getElementById("stats");
 		var viewPort = document.querySelector(".viewport");
 
 		for (var i = 0; i < 50; i++) {
@@ -26,7 +27,7 @@
 		draggable.addEventListener('mouseup', release);
 		var offset = 0, reference = 0,min = 0, frame;
 		var pressed = false;
-		var max = viewPort.scrollWidth;//need to work on this
+		var max = viewPort.scrollWidth - viewPort.offsetWidth;
 		var velocity, amplitude, target;
 		var timestamp, ticker;
 		var timeConstanct = 325;
@@ -34,6 +35,7 @@
 		function scroll(x) {
 			offset = (x > max) ? max : (x < min) ? min : x;
 			viewPort.scrollLeft = offset;
+			stats.innerText = offset;
 		}
 
 		function tap(e) {
