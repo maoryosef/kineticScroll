@@ -19,7 +19,7 @@ module.exports = function(grunt) {
         		}
     		},
     		dist: {
-      			src: ['client/requestAnimFrame.js', 'client/app_using_jquery.js'],
+      			src: ['client/src/requestAnimFrame.js', 'client/src/app_using_jquery.js'],
       			dest: 'client/app.js',
 			},
   		},

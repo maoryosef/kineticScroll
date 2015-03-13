@@ -1,4 +1,4 @@
-// Source: client/requestAnimFrame.js
+// Source: client/src/requestAnimFrame.js
 (function(window) {
 		window.requestAnimFrame = (function(){
           return  window.requestAnimationFrame       || 
@@ -11,7 +11,7 @@
                   };
     })();
 })(window);
-// Source: client/app_using_jquery.js
+// Source: client/src/app_using_jquery.js
 (function(window) {
     $(function() {
     	var dragger = $("#dragged");
