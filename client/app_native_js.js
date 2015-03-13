@@ -1,6 +1,5 @@
-// Source: client/requestAnimFrame.js
 (function(window) {
-		window.requestAnimFrame = (function(){
+	window.requestAnimFrame = (function(){
           return  window.requestAnimationFrame       || 
                   window.webkitRequestAnimationFrame || 
                   window.mozRequestAnimationFrame    || 
@@ -10,37 +9,33 @@
                     window.setTimeout(callback, 1000 / 60);
                   };
     })();
-})(window);
-// Source: client/app_using_jquery.js
-(function(window) {
-    $(function() {
-    	var dragger = $("#dragged");
-    	var stats = $("#stats");
-    	var viewPort = $(".viewport");
 
-    	for (var i = 0; i < 50; i++) {
-    		var el = $("<div></div>");
-    		el.addClass("item");
-    		el.addClass((i % 2  == 0) ? "even" : "odd");
-    		el.text(i);
-    		dragger.append(el);
-    	}
+	window.onload = function(e) {
+		var draggable = document.getElementById("dragged");
+		var stats = document.getElementById("stats");
+		var viewPort = document.querySelector(".viewport");
 
-		var offset = 0, reference = 0, frame = 0;
+		for (var i = 0; i < 50; i++) {
+			var el = document.createElement("div");
+			el.className = "item " + ((i % 2  == 0) ? "even" : "odd");
+			el.innerText = i + 1;
+			draggable.appendChild(el);
+		}
+
+		draggable.addEventListener('mousedown', tap);
+		draggable.addEventListener('mousemove', drag);
+		draggable.addEventListener('mouseup', release);
+		var offset = 0, reference = 0,min = 0, frame;
 		var pressed = false;
-		var MIN_SCROLL = 0, MAX_SCROLL = viewPort[0].scrollWidth - viewPort[0].offsetWidth;
+		var max = viewPort.scrollWidth - viewPort.offsetWidth;
 		var velocity, amplitude, target;
 		var timestamp, ticker;
-		var TIME_CONSTANT = 325;
-
-    	dragger.bind('mousedown', tap);
-    	dragger.bind('mousemove', drag);
-    	dragger.bind('mouseup', release);
+		var timeConstanct = 325;
 
 		function scroll(x) {
-			offset = (x > MAX_SCROLL) ? MAX_SCROLL : (x < MIN_SCROLL) ? MIN_SCROLL : x;
-			viewPort.scrollLeft(offset);
-			stats.text(offset);
+			offset = (x > max) ? max : (x < min) ? min : x;
+			viewPort.scrollLeft = offset;
+			stats.innerText = offset;
 		}
 
 		function tap(e) {
@@ -95,7 +90,7 @@
 
 			if (amplitude) {
 				elapsed = Date.now() - timestamp;
-				delta = -amplitude * Math.exp(-elapsed / TIME_CONSTANT);
+				delta = -amplitude * Math.exp(-elapsed / timeConstanct);
 				if (delta > 0.5 || delta < -0.5) {
 					scroll(target + delta);
 					requestAnimationFrame(autoScroll);
@@ -113,6 +108,7 @@
 				if (delta > 2 || delta < -2) {
 					reference = y;
 					scroll(offset + delta);
+
 				} 
 			}
 
@@ -121,5 +117,5 @@
 
 			return false;
 		}
-    });
+	};
 }(window));

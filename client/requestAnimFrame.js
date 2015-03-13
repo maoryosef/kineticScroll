@@ -1,4 +1,4 @@
-function(window) {
+(function(window) {
 		window.requestAnimFrame = (function(){
           return  window.requestAnimationFrame       || 
                   window.webkitRequestAnimationFrame || 
@@ -9,4 +9,4 @@ function(window) {
                     window.setTimeout(callback, 1000 / 60);
                   };
     })();
-}(window);
+})(window);

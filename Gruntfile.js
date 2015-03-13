@@ -12,13 +12,26 @@ module.exports = function(grunt) {
                 }
             }
 		},
+		concat: {
+    		options: {
+      			process: function(src, filepath) {
+          			return '// Source: ' + filepath + '\n' + src;
+        		}
+    		},
+    		dist: {
+      			src: ['client/requestAnimFrame.js', 'client/app_using_jquery.js'],
+      			dest: 'client/app.js',
+			},
+  		},
 		watch: {
 			css: {
-				files: '**/*.scss',
-				tasks: ['sass']
+				files: ['**/*.scss', '**/*.js'],
+				tasks: ['sass', 'concat']
 			}
 		}
 	});
+
+	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-sass');
 	grunt.registerTask('default',['watch']);
