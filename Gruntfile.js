@@ -20,13 +20,17 @@ module.exports = function(grunt) {
     		},
     		dist: {
       			src: ['client/src/requestAnimFrame.js', 'client/src/app_using_jquery.js'],
-      			dest: 'client/app.js',
+      			dest: 'client/app.js'
 			},
+			ang_dist: {
+      			src: ['client/src/mainModule.js', 'client/src/mainController.js'],
+      			dest: 'client/app2.js'
+			}
   		},
 		watch: {
 			css: {
 				files: ['**/*.scss', '**/*.js'],
-				tasks: ['sass', 'concat']
+				tasks: ['sass', 'concat:ang_dist']
 			}
 		}
 	});
