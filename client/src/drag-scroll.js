@@ -18,8 +18,11 @@ angular.module('dragScroll', []).directive('dragScroll', ['$interval', function(
 		},
 		link: function(scope, element, attrs) {
 			var TIME_CONSTANT = 325;
+			var scrolledAxis = attrs.axis || "x";
+			var kineticScroll = attrs.kineticScroll ? attrs.kineticScroll == "true" : true;
+
 			var viewPort = document.querySelector(scope.affectedElementQuery);
-			var MIN_SCROLL = 0, MAX_SCROLL = viewPort.scrollWidth - viewPort.offsetWidth;
+			var MIN_SCROLL = 0, MAX_SCROLL = scrolledAxis == "x" ? viewPort.scrollWidth - viewPort.offsetWidth : viewPort.scrollHeight - viewPort.offsetHeight;
 			var BODY_EL = angular.element(document.querySelector("body, html"));
 
 			var offset = 0, reference = 0, frame = 0;
@@ -28,21 +31,27 @@ angular.module('dragScroll', []).directive('dragScroll', ['$interval', function(
 			var timestamp, ticker;
 			element.bind('mousedown', tap);
 
-			function scroll(x) {
-				offset = (x > MAX_SCROLL) ? MAX_SCROLL : (x < MIN_SCROLL) ? MIN_SCROLL : x;
-				viewPort.scrollLeft = offset;
+			function scroll(val) {
+				offset = (val > MAX_SCROLL) ? MAX_SCROLL : (val < MIN_SCROLL) ? MIN_SCROLL : val;
+				if (scrolledAxis == "x") {
+					viewPort.scrollLeft = offset;
+				} else if (scrolledAxis == "y") {
+					viewPort.scrollTop = offset;
+				}
 			}
 
 			function tap(e) {
 				pressed = true;
-				reference = e.clientX;
+				reference = scrolledAxis ==  "x" ? e.clientX : e.clientY;
 	    		BODY_EL.bind('mousemove', drag);
 	    		BODY_EL.bind('mouseup', release);
 				velocity = amplitude = 0;
 				frame = offset;
 				timestamp = Date.now();
-				$interval.cancel(ticker);
-				ticker = $interval(track, 100);
+				if (kineticScroll) {
+					$interval.cancel(ticker);
+					ticker = $interval(track, 100);
+				}
 
 				e.preventDefault();
 				e.stopPropagation();
@@ -66,14 +75,16 @@ angular.module('dragScroll', []).directive('dragScroll', ['$interval', function(
 			function release(e) {
 				pressed = false;
 
-				$interval.cancel(ticker);
+				if (kineticScroll) {
+					$interval.cancel(ticker);
 
-				if (velocity > 10 || velocity < -10) {
-					amplitude = 0.8 * velocity;
-					target = Math.round(offset + amplitude);
-					timestamp = Date.now();
-					requestAnimationFrame(autoScroll);
-				}
+					if (velocity > 10 || velocity < -10) {
+						amplitude = 0.8 * velocity;
+						target = Math.round(offset + amplitude);
+						timestamp = Date.now();
+						requestAnimationFrame(autoScroll);
+					}
+				}	
 
 	    		BODY_EL.unbind('mousemove', drag);
 	    		BODY_EL.unbind('mouseup', release);
@@ -100,12 +111,12 @@ angular.module('dragScroll', []).directive('dragScroll', ['$interval', function(
 			}
 
 			function drag(e) {
-				var y, delta;
+				var val, delta;
 				if (pressed) {
-					y = e.clientX;
-					delta = reference - y;
+					val = scrolledAxis == "x" ? e.clientX : e.clientY;
+					delta = reference - val;
 					if (delta > 2 || delta < -2) {
-						reference = y;
+						reference = val;
 						scroll(offset + delta);
 					} 
 				}

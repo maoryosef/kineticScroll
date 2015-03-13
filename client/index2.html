@@ -5,7 +5,13 @@
 	<script type="text/javascript" src="app2.js"></script>
 	<body ng-controller="MainController">
 		<div class="viewport">
-			<div drag-scroll affected-element-query=".viewport" class="innerDiv">
+			<div drag-scroll affected-element-query=".viewport" kinetic-scroll="true" class="innerDiv">
+				<div class="item" ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="item in items">{{item.id}}</div>
+			</div>
+		</div>
+
+		<div class="viewport2">
+			<div drag-scroll affected-element-query=".viewport2" kinetic-scroll="true" axis="y" class="innerDiv">
 				<div class="item" ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="item in items">{{item.id}}</div>
 			</div>
 		</div>

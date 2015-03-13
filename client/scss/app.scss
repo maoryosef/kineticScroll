@@ -4,6 +4,7 @@
 	height: 480px;
 	overflow: hidden;
 	padding: 10px;
+	float: left;
 	.innerDiv {
 		margin-top: 220px;
 		height: 40px;
@@ -18,6 +19,41 @@
 			height: 100%;
 			border-right: 1px solid blue;
 			display: inline-block;
+			text-align: center;
+			font-size: 14px;
+			line-height: 40px;
+			&.odd {
+				background-color: green;
+			}
+			&.even {
+				background-color: red;
+			}
+		}
+	}
+}
+
+.viewport2 {
+	border: 1px solid black;
+	width: 640px;
+	height: 480px;
+	overflow: hidden;
+	padding: 10px;
+	float: left;
+	margin-left: 5px;
+	.innerDiv {
+		margin-left: 300px;
+		height: 3000px;
+		width: 40px;
+		border: 1px solid purple;
+		cursor: -webkit-grab;
+		&:active {
+			cursor: -webkit-grabbing;
+		}
+		.item {
+			height: 50px;
+			width: 100%;
+			border-bottom: 1px solid blue;
+			display: block;
 			text-align: center;
 			font-size: 14px;
 			line-height: 40px;
