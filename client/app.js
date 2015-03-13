@@ -34,8 +34,6 @@
 		var TIME_CONSTANT = 325;
 
     	dragger.bind('mousedown', tap);
-    	dragger.bind('mousemove', drag);
-    	dragger.bind('mouseup', release);
 
 		function scroll(x) {
 			offset = (x > MAX_SCROLL) ? MAX_SCROLL : (x < MIN_SCROLL) ? MIN_SCROLL : x;
@@ -46,7 +44,8 @@
 		function tap(e) {
 			pressed = true;
 			reference = e.clientX;
-
+    		$("body, html").bind('mousemove', drag);
+    		$("body, html").bind('mouseup', release);
 			velocity = amplitude = 0;
 			frame = offset;
 			timestamp = Date.now();
@@ -83,6 +82,9 @@
 				timestamp = Date.now();
 				requestAnimationFrame(autoScroll);
 			}
+
+    		$("body, html").unbind('mousemove', drag);
+    		$("body, html").unbind('mouseup', release);
 
 			e.preventDefault();
 			e.stopPropagation();
