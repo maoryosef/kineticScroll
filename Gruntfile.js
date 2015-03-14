@@ -29,7 +29,7 @@ module.exports = function(grunt) {
   		},
 		watch: {
 			css: {
-				files: ['**/*.scss', '**/*.js'],
+				files: ['**/*.scss', '**/*.js', '!client/app.js'],
 				tasks: ['sass', 'concat:ang_dist']
 			}
 		}

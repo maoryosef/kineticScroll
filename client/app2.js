@@ -2,10 +2,12 @@
 var mainModule = angular.module('kineticScroll', ['dragScroll']);
 
 // Source: client/src/mainController.js
-mainModule.controller("MainController", function($scope) {
+mainModule.controller("MainController", function($scope, $timeout) {
 	$scope.items = [];
 
-	for (var i = 0; i < 50; i++) {
-		$scope.items.push({id: i});
-	}
+	$timeout(function() {
+		for (var i = 0; i < 50; i++) {
+			$scope.items.push({id: i});
+		}
+	}, 2000);
 });

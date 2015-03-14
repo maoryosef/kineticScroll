@@ -22,7 +22,7 @@ angular.module('dragScroll', []).directive('dragScroll', ['$interval', function(
 			var kineticScroll = attrs.kineticScroll ? attrs.kineticScroll == "true" : true;
 
 			var viewPort = document.querySelector(scope.affectedElementQuery);
-			var MIN_SCROLL = 0, MAX_SCROLL = scrolledAxis == "x" ? viewPort.scrollWidth - viewPort.offsetWidth : viewPort.scrollHeight - viewPort.offsetHeight;
+			var MIN_SCROLL = 0, MAX_SCROLL = 0;
 			var BODY_EL = angular.element(document.querySelector("body, html"));
 
 			var offset = 0, reference = 0, frame = 0;
@@ -30,6 +30,10 @@ angular.module('dragScroll', []).directive('dragScroll', ['$interval', function(
 			var velocity, amplitude, target;
 			var timestamp, ticker;
 			element.bind('mousedown', tap);
+
+			function getMaxScroll() {
+				return scrolledAxis == "x" ? viewPort.scrollWidth - viewPort.clientWidth : viewPort.scrollHeight - viewPort.clientHeight;
+			}
 
 			function scroll(val) {
 				offset = (val > MAX_SCROLL) ? MAX_SCROLL : (val < MIN_SCROLL) ? MIN_SCROLL : val;
@@ -43,6 +47,7 @@ angular.module('dragScroll', []).directive('dragScroll', ['$interval', function(
 			function tap(e) {
 				pressed = true;
 				reference = scrolledAxis ==  "x" ? e.clientX : e.clientY;
+				MAX_SCROLL = getMaxScroll();
 	    		BODY_EL.bind('mousemove', drag);
 	    		BODY_EL.bind('mouseup', release);
 				velocity = amplitude = 0;

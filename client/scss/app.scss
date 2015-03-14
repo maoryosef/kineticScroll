@@ -2,14 +2,16 @@
 	border: 1px solid black;
 	width: 640px;
 	height: 480px;
-	overflow: hidden;
+	overflow: scroll;
 	padding: 10px;
 	float: left;
 	.innerDiv {
+		position: relative;
 		margin-top: 220px;
 		margin-right: 10px;
 		height: 40px;
-		width: 3000px;
+		display: inline-block;
+		white-space: nowrap;
 		border: 1px solid purple;
 		cursor: -webkit-grab;
 		&:active {
@@ -29,6 +31,14 @@
 			&.even {
 				background-color: red;
 			}
+		}
+		&:after {
+			/*position:absolute;
+			content: '\00a0';
+			width:10px;
+			height: 10px;
+			background-color: inherit;
+			right: -10px;*/
 		}
 	}
 }
