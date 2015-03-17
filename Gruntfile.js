@@ -32,10 +32,22 @@ module.exports = function(grunt) {
 				files: ['**/*.scss', '**/*.js', '!client/app.js'],
 				tasks: ['sass', 'concat:ang_dist']
 			}
+		},
+		uglify: {
+			options: {
+				mangle: true
+			},
+			dist: {
+				files: {
+					'client/app2.min.js': ['client/app2.js'],
+					'client/src/drag-scroll.min.js': ['client/src/drag-scroll.js']
+				}
+			}
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-sass');
 	grunt.registerTask('default',['watch']);
