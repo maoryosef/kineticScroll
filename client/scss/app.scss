@@ -1,3 +1,69 @@
+.container {
+    position:relative;
+    padding-left: 20px;
+    list-style-type: none;
+    margin-left: 100;
+    margin-top: 100px;
+    &:before {
+		content: '\00a0';
+		position: absolute;
+		border-left: 1px solid black;
+		border-bottom: 1px solid black;
+		top: -70px;
+		left: -21px;
+		width: 20px;
+		height: 100px;
+    }
+    > div {
+	    border:1px solid white;
+	    margin-bottom: 10px;
+    	width: 235px;
+    	border-radius:5px;
+    	padding-left:10px;
+    	position:relative;
+    	&:before {
+ 		    position:absolute;
+		    content:'\00a0';
+		    left:-21px;
+		    top:10px;
+		    width:20px;
+		    height:130%;
+		    border-top:1px solid black; 
+		    border-left:1px solid black; 
+    	}
+    	.details {
+    		position:absolute;
+    		display: none;
+    	}
+    	> span {
+    	 	display: block;
+    	 	&.expiration {
+    	 		color: red;
+    	 	}
+    	}
+    	&.selected {
+    		border-color:black;
+	    	.details {
+	    		display: block;
+	    		top: 0;
+	    		left: 270px;
+	    		width: 230px;
+    		}
+    		&:after {
+	 		    position:absolute;
+			    content:'\00a0';
+			    right:-21px;
+			    top:10px;
+			    width:20px;
+			    border-top:1px solid black; 
+    		}
+    	}
+    	&:last-child:before {
+			border-left:0;
+    	}
+    }
+}
+
 .viewport {
 	border: 1px solid black;
 	width: 640px;

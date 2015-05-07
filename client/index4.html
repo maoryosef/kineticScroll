@@ -1,0 +1,52 @@
+<html ng-app="dynamicScroll">
+	<link rel="stylesheet" type="text/css" href="css/app.css">
+	<script type="text/javascript" src="vendor/angularjs/angular.js"></script>
+	<script type="text/javascript" src="app4.js"></script>
+	<style>
+		.table-header-container, .table-body {
+			position: relative;
+		}
+
+		.table-header, .table-body.mask .table-row {
+			overflow-y: scroll;
+		}
+
+		.table-header > div:last-child:after,  .table-body.mask .table-row > div:last-child:after{
+			content: "\00a0";
+            position: absolute;
+            width: 20px;
+            right: 0;
+            background-color: white;
+            z-index: 10;
+            padding: inherit;
+            line-height: inherit;
+            font-size: inherit;
+            padding-left: 0;
+            padding-right: 0;
+		}
+
+	</style>
+	<body ng-controller="MainController">
+		<button ng-click="addItem()">Add</button>
+		<button ng-click="removeItem()">Remove</button>
+		{{tableMonitor}}
+		<div class="table-header-container" style="border:1px solid black;width: 350px;height: 30px;">
+			<div class="table-header" style="display:flex;">
+				<div style="flex:1;border-right:1px solid blue;padding:5px">header1</div>
+				<div style="flex:1;border-right:1px solid blue;padding:5px">header2</div>
+				<div style="flex:1;border-right:1px solid blue;padding:5px">header3</div>
+				<div style="flex:1;padding:5px">header4</div>
+			</div>
+		</div>
+		<div class="table-body-container" style="border:1px solid red;width: 350px;height: 150px; overflow-y:auto">
+			<div scroller items="items" masked-class="mask" class="table-body">
+				<div class="table-row" style="display:flex; background-color:#ababab" ng-repeat="item in items">
+					<div style="flex:1;border-right:1px solid blue;padding:5px">value1_{{item.id}}</div>
+					<div style="flex:1;border-right:1px solid blue;padding:5px">value2_{{item.id}}</div>
+					<div style="flex:1;border-right:1px solid blue;padding:5px">value3_{{item.id}}</div>
+					<div style="flex:1;padding:5px">value4_{{item.id}}</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
